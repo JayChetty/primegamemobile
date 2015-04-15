@@ -1,4 +1,13 @@
 (function() {
+    var StageView = require('./views/stage_view');
+    var TeamView = require('./views/team_view');
+    var DisplayObject = require('./models/display_object');
+    var Hazard = require('./models/hazard');
+    var HeroTeam = require('./models/hero_team');
+    var Helpee = require('./models/helpee');
+    var SpriteView = require('./views/sprite_view');
+    var HeroSpriteView = require('./views/hero_sprite_view');
+    var app = require('ampersand-app');
 
     document.addEventListener('DOMContentLoaded', function() {
         // create an new instance of a pixi stage
@@ -9,36 +18,55 @@
         var height = screen.availHeight;
         var renderer = PIXI.autoDetectRenderer(width, height);
 
-        // add the renderer view element to the DOM
-        document.body.appendChild(renderer.view);
+        var blobTexture = PIXI.Texture.fromImage("asset/blob2.png");
+        var horizontalTexture = PIXI.Texture.fromImage("asset/horizontal.png");
+        var hazardTexture = PIXI.Texture.fromImage("asset/hazard.png");
+        //set up models
+        var heroTeamModel = new HeroTeam({speed: 1, size:6})
+        var helpeeModel = new Helpee({speed: 1, position:{x:100,y:200}, direction:Math.PI *(1/4)})
+        var targetModel = new DisplayObject({position:{x:400,y:200}})
 
-        requestAnimFrame(animate);
+        var wallModel = new DisplayObject({ position:{x:280,y:30}, deflector:true})
 
-        // create a texture from an image path
-        var texture = PIXI.Texture.fromImage("asset/bunny.png");
+        var hazardModel = new Hazard({speed: 1, position:{x:250,y:60}, protectorPrimes:[3]})
 
-        // create a new Sprite using the texture
-        var bunny = new PIXI.Sprite(texture);
+        //and sprites
+        var heroTeamSprite = new PIXI.Sprite(horizontalTexture);
+        var targetSprite = new PIXI.Sprite(blobTexture);
+        var helpeeSprite = new PIXI.Sprite(blobTexture);
 
-        // center the sprites anchor point
-        bunny.anchor.x = 0.5;
-        bunny.anchor.y = 0.5;
+        var hazardSprite = new PIXI.Sprite(hazardTexture);
+        var wallSprite = new PIXI.Sprite(horizontalTexture);
 
-        // move the sprite to the center of the screen
-        bunny.position.x = width / 2;
-        bunny.position.y = height / 2;
+        //create views
+        var spriteViews = [];//add additional object to this eg hazards
+//        var hazardSpriteView = new SpriteView({ model:hazardModel, sprite:hazardSprite });
+//        var wallSpriteView = new SpriteView({ model:wallModel, sprite:wallSprite });
+//        spriteViews.push(hazardSpriteView)
+//        spriteViews.push(wallSpriteView)
 
-        stage.addChild(bunny);
+        var targetView = new SpriteView({ model:targetModel, sprite:targetSprite });
+        var heroTeamView = new HeroSpriteView({ model:heroTeamModel, sprite:heroTeamSprite });
+        var helpeeView = new SpriteView({ model:helpeeModel, sprite:helpeeSprite });
+        //create stage
+        var teamView = new TeamView({model:heroTeamModel});
+        var teamEl = document.body.querySelector('.team-container');
+        console.log('teamEl', teamEl);
+        teamEl.appendChild(teamView.render().el);
 
-        function animate() {
-            requestAnimFrame(animate);
 
-            // just for fun, let's rotate mr rabbit a little
-            bunny.rotation += 0.1;
+        //create view for the stage and sprites
+        var stageView = new StageView({
+            renderer:renderer,
+            heroTeamSpriteView: heroTeamView,
+            stage: stage,
+            spriteViews:spriteViews,
+            helpeeSpriteView: helpeeView,
+            targetSpriteView:targetView
+        })
+        document.body.appendChild(stageView.renderer.view);  
 
-            // render the stage
-            renderer.render(stage);
-        }
+       
     }, false);
 
 }());
