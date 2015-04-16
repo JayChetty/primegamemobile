@@ -28,15 +28,37 @@ MoveableDisplayObject = DisplayObject.extend({
   },
 
   moveTowardsPosition:function(targetPosition){
+    if(!targetPosition){return}
     var pixelsPerMove = this.speed * 5;
+    
     var diffX = this.position.xDifference(targetPosition);
     var diffY = this.position.yDifference(targetPosition);
+    
+//    var diffX = targetPosition.xDifference(this.position);
+//    var diffY = targetPosition.yDifference(this.position);
+
 
 
     var absDiffX = Math.abs(diffX);
     var absDiffY = Math.abs(diffY);
+    
+    var baseDirection = Math.atan(absDiffX/absDiffY);
+    if(diffX > 0){
+      if(diffY>0){
+        this.direction = Math.PI - baseDirection;
+      }else{
+        this.direction = baseDirection;
+      }
+    }
+    else{
 
-    var totalDiff = absDiffX + absDiffY
+      if(diffY>0){      
+        this.direction = Math.PI + baseDirection;
+      }else{
+        this.direction = (2*Math.PI) - baseDirection;   
+      }
+    }
+    var totalDiff = absDiffX + absDiffY;
 
     if( diffX!==0 ){
       if( diffY === 0  ){

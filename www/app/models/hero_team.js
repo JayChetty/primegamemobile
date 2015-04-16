@@ -12,6 +12,7 @@ var HeroTeam = MoveableDisplayObject.extend({
     },
     groupSize:'number',
     numGroups:'number',
+    direction:'number'
   },
   initialize:function(){
     this.deflector = true;

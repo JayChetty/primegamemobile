@@ -4,11 +4,11 @@ var HeroSpriteView = function(spec){
   this.horizontalTexture = PIXI.Texture.fromImage("asset/horizontal.png");
   this.verticalTexture = PIXI.Texture.fromImage("asset/vertical.png");
     
-  this.leftWalk = PIXI.Texture.fromImage("asset/vertical.png");
-  this.rightWalk = PIXI.Texture.fromImage("asset/horizontal.png");
+  this.leftWalk = PIXI.Texture.fromImage("asset/arrow.png");
+  this.rightWalk = PIXI.Texture.fromImage("asset/arrow.png");
   this.walkTextures = [];
   this.walkTextures.push(this.leftWalk);
-  this.walkTextures.push(this.rightWalk);
+  this.walkTextures.push(this.leftWalk);
   this.phase = 0;
     
   this.model = spec.model;
@@ -31,7 +31,7 @@ var HeroSpriteView = function(spec){
   this.sprite.mouseup = function(data){
     if(this.model.groupSize ===2){
       this.model.vertical = !this.model.vertical
-      this.setWallTexture();
+      this.setWallTexture();      
     }
   }.bind(this)
 }
@@ -43,8 +43,8 @@ HeroSpriteView.prototype = {
     this.phase++
     this.model.moveTowardsTarget();
     if(this.model.target && this.phase%10===0){
-      console.log('this.phase',this.phase);
-      this.sprite.setTexture(this.walkTextures[this.phase%20/10]);
+      
+      this.sprite.setTexture(this.walkTextures[this.phase%20/10]);     
     }   
   },
   
@@ -58,6 +58,8 @@ HeroSpriteView.prototype = {
   syncPosition:function(){
     this.sprite.position.x = this.model.position.x;
     this.sprite.position.y = this.model.position.y;
+    console.log('this.model.direction',this.model.direction);
+    this.sprite.rotation = this.model.direction;
   },
   setGroupTexture:function(){
     var texture = null
