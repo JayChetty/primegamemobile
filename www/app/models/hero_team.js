@@ -29,9 +29,14 @@ var HeroTeam = MoveableDisplayObject.extend({
       this.deflector = false;
     }
   },
+
+  setTarget:function(target){
+    this.target = target;
+    this.setDirectionFromTarget(target);
+  },
   moveTowardsTarget:function(){
     if(this.target && this.target.position){
-      this.moveTowardsPosition(this.target.position)
+      this.moveInDirection();
       if(this.position.distanceTo(this.target.position)<this.speed*5){
         this.arrivedAtTarget()
       }

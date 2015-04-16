@@ -27,12 +27,12 @@ var StageView = function(spec){
   //go to clicks on stage
   this.stage.touchstart = function(data){
     console.log('touchstart');
-    this.heroTeamSpriteView.model.target = { position: { x:data.global.x, y:data.global.y }}
+    this.heroTeamSpriteView.model.setTarget( { position: { x:data.global.x, y:data.global.y } } )
   }.bind(this)
   
   this.stage.mousedown = function(data){
     console.log('mousedown');
-    this.heroTeamSpriteView.model.target = { position: { x:data.global.x, y:data.global.y }}
+    this.heroTeamSpriteView.model.setTarget( { position: { x:data.global.x, y:data.global.y } } )
   }.bind(this)
 
   //set up helpee
