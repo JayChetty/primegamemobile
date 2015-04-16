@@ -25,7 +25,7 @@ MoveableDisplayObject = DisplayObject.extend({
     var change = math.polarToCartesian(this.speed, this.direction );
 
     this.position.x = this.position.x + change.x;
-    this.position.y = this.position.y + change.y;
+    this.position.y = this.position.y - change.y;
   },
 
   setTargetPosition:function(position){
@@ -35,16 +35,17 @@ MoveableDisplayObject = DisplayObject.extend({
   setDirectionFromTarget:function(){
     if(!this.target){return;}
     var diffX =  this.position.xDifference(this.target.position);
-    var diffY =  this.position.yDifference(this.target.position);
+    var diffY =  -1 * this.position.yDifference(this.target.position);
 
     console.log('diffX', diffX)
     console.log('diffY', diffY)
-    var absDiffX = Math.abs(diffX);
-    var absDiffY = Math.abs(diffY);
 
-    console.log('base direction')
+    var absDiffX = Math.abs(diffX);
+    var absDiffY = Math.abs(diffY);   
     
     var baseDirection = Math.atan(absDiffY/absDiffX);
+
+    console.log('base direction', baseDirection);
 
     if(diffX > 0){
       if(diffY > 0){

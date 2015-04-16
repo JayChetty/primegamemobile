@@ -4,8 +4,8 @@ var HeroSpriteView = function(spec){
   this.horizontalTexture = PIXI.Texture.fromImage("asset/horizontal.png");
   this.verticalTexture = PIXI.Texture.fromImage("asset/vertical.png");
     
-  this.leftWalk = PIXI.Texture.fromImage("asset/arrowright.png");
-  this.rightWalk = PIXI.Texture.fromImage("asset/arrowright.png");
+  this.leftWalk = PIXI.Texture.fromImage("asset/arrow.png");
+  this.rightWalk = PIXI.Texture.fromImage("asset/arrow.png");
   this.walkTextures = [];
   this.walkTextures.push(this.leftWalk);
   this.walkTextures.push(this.leftWalk);
@@ -58,7 +58,7 @@ HeroSpriteView.prototype = {
   syncPosition:function(){
     this.sprite.position.x = this.model.position.x;
     this.sprite.position.y = this.model.position.y;
-    this.sprite.rotation = this.model.direction;
+    this.sprite.rotation = (Math.PI/2) - (this.model.direction);
   },
   setGroupTexture:function(){
     var texture = null
