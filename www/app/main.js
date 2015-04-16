@@ -22,7 +22,7 @@
         var horizontalTexture = PIXI.Texture.fromImage("asset/horizontal.png");
         var hazardTexture = PIXI.Texture.fromImage("asset/hazard.png");
         //set up models
-        var heroTeamModel = new HeroTeam({position:{x:100,y:100}, speed: 1, size:2})
+        var heroTeamModel = new HeroTeam({position:{x:100,y:100}, speed: 5, size:2})
         var helpeeModel = new Helpee({speed: 1, position:{x:100,y:200}, direction: Math.PI*(1/4) })
         var targetModel = new DisplayObject({position:{x:400,y:200}})
 

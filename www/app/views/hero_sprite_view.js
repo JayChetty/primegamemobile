@@ -26,6 +26,11 @@ var HeroSpriteView = function(spec){
     this.setWallTexture();
   },this)
 
+  this.model.on('arrived-at-target',function(){
+    this.setGroupTexture();
+  },this)
+
+
   //clicks change position
   this.sprite.interactive = true;
   this.sprite.mouseup = function(data){

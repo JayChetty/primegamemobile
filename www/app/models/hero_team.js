@@ -44,6 +44,7 @@ var HeroTeam = MoveableDisplayObject.extend({
   },
   arrivedAtTarget:function(){
     app.trigger('display-target', this.target)
+    this.trigger('arrived-at-target')
     this.target = null;
   },
 
