@@ -3,9 +3,11 @@ var HeroSpriteView = function(spec){
   this.blobTexture = PIXI.Texture.fromImage("asset/blob2.png");
   this.horizontalTexture = PIXI.Texture.fromImage("asset/horizontal.png");
   this.verticalTexture = PIXI.Texture.fromImage("asset/vertical.png");
+
+  this.wallTexture = PIXI.Texture.fromImage("asset/sheep2-stacked.png");
     
-  this.leftWalk = PIXI.Texture.fromImage("asset/arrow.png");
-  this.rightWalk = PIXI.Texture.fromImage("asset/arrow.png");
+  this.leftWalk = PIXI.Texture.fromImage("asset/sheep2-1.png");
+  this.rightWalk = PIXI.Texture.fromImage("asset/sheep2-1.png");
   this.walkTextures = [];
   this.walkTextures.push(this.leftWalk);
   this.walkTextures.push(this.leftWalk);
@@ -13,6 +15,7 @@ var HeroSpriteView = function(spec){
     
   this.model = spec.model;
   this.sprite = spec.sprite;
+  this.sprite.setTexture(this.leftWalk)
   this.syncPosition();
   this.model.on('change',function(){
     this.syncPosition();
@@ -55,9 +58,13 @@ HeroSpriteView.prototype = {
   
   setWallTexture:function(){
     if(this.model.vertical){
-      this.sprite.setTexture(this.verticalTexture);
+      this.sprite.setTexture(this.wallTexture);
+      this.model.direction = Math.PI/2;
+      this.sprite.rotation = Math.PI/2;
     }else{
-      this.sprite.setTexture(this.horizontalTexture);
+      this.sprite.setTexture(this.wallTexture);
+      this.model.direction = 0
+      this.sprite.rotation = 0;
     }
   },
   syncPosition:function(){

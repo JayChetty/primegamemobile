@@ -15,13 +15,20 @@ it('should be abe to have a target',function(){
   expect(moveableDisplayObject.target.position.y).to.equal(0);
 })
 
-it('should be abe to move torwards target position',function(){
+it('should set direction when setting target',function(){
   var moveableDisplayObject = new HeroTeam();
-  moveableDisplayObject.target = {position:{x:100,y:0}};
-  moveableDisplayObject.moveTowardsTarget();
-  expect(moveableDisplayObject.position.y).to.equal(0);
-  expect(moveableDisplayObject.position.x).to.equal(5);
+  moveableDisplayObject.setTarget({position:{x:100,y:0}});
+  expect(moveableDisplayObject.direction).to.equal(0);
 })
+
+it('should be able to move towards target',function(){
+  var moveableDisplayObject = new HeroTeam();
+  moveableDisplayObject.setTarget({position:{x:100,y:0}});
+  moveableDisplayObject.moveTowardsTarget()
+  // expect(moveableDisplayObject.direction).to.equal(0);
+  expect(moveableDisplayObject.position.x).to.equal(1);
+})
+
 
 it('should have a size', function(){
   var team = new HeroTeam({size:3});

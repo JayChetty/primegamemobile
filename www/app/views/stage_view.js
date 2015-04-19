@@ -120,7 +120,7 @@ StageView.prototype = {
       if(helpee.inContact(obj)){
         anyContactYet = true;
 
-        if(obj.hazard && !obj.protected()){
+        if(obj.hazard && !obj.deflector && !obj.protected()){
           helpee.stuck = true;
         }
         if( obj.deflector && this.helpeeSpriteView.deflectorBuffer == 0 ){

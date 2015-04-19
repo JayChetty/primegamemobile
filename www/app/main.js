@@ -2,9 +2,13 @@
     var StageView = require('./views/stage_view');
     var TeamView = require('./views/team_view');
     var DisplayObject = require('./models/display_object');
+
     var Hazard = require('./models/hazard');
     var HeroTeam = require('./models/hero_team');
     var Helpee = require('./models/helpee');
+    var Wall = require('./models/wall');
+
+    var Position = require('./models/position');
     var SpriteView = require('./views/sprite_view');
     var HeroSpriteView = require('./views/hero_sprite_view');
     var app = require('ampersand-app');
@@ -22,11 +26,15 @@
         var horizontalTexture = PIXI.Texture.fromImage("asset/horizontal.png");
         var hazardTexture = PIXI.Texture.fromImage("asset/hazard.png");
         //set up models
-        var heroTeamModel = new HeroTeam({position:{x:100,y:100}, speed: 5, size:2})
+
+        var heroStart = new Position({x:200, y:200})
+        var heroTeamModel = new HeroTeam({position:heroStart, speed: 5, size:2})
         var helpeeModel = new Helpee({speed: 1, position:{x:100,y:200}, direction: Math.PI*(1/4) })
         var targetModel = new DisplayObject({position:{x:400,y:200}})
 
-        var wallModel = new DisplayObject({ position:{x:280,y:30}, deflector:true})
+        var wallStart = new Position({x:180, y:100})
+        var wallEnd = new Position({x:196, y:100})
+        var wallModel = new Wall({start:wallStart, end:wallEnd})
 
         var hazardModel = new Hazard({speed: 1, position:{x:250,y:60}, protectorPrimes:[3]})
 
@@ -41,9 +49,9 @@
         //create views
         var spriteViews = [];//add additional object to this eg hazards
 //        var hazardSpriteView = new SpriteView({ model:hazardModel, sprite:hazardSprite });
-//        var wallSpriteView = new SpriteView({ model:wallModel, sprite:wallSprite });
+        var wallSpriteView = new SpriteView({ model:wallModel, sprite:wallSprite });
 //        spriteViews.push(hazardSpriteView)
-//        spriteViews.push(wallSpriteView)
+        spriteViews.push(wallSpriteView)
 
         var targetView = new SpriteView({ model:targetModel, sprite:targetSprite });
         var heroTeamView = new HeroSpriteView({ model:heroTeamModel, sprite:heroTeamSprite });

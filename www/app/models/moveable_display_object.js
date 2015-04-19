@@ -17,13 +17,16 @@ MoveableDisplayObject = DisplayObject.extend({
   },
 
   inContact:function(otherObject){
-    return this.position.distanceTo(otherObject.position) < 15
+    if(otherObject.hasOwnProperty('contact')){
+      return otherObject.contact(this.position)
+    } else{
+      return this.position.distanceTo(otherObject.position) < 15
+    }
   },
 
   moveInDirection:function(){
     if(this.direction===null || this.direction === undefined){ return }
     var change = math.polarToCartesian(this.speed, this.direction );
-
     this.position.x = this.position.x + change.x;
     this.position.y = this.position.y - change.y;
   },
@@ -37,18 +40,14 @@ MoveableDisplayObject = DisplayObject.extend({
     var diffX =  this.position.xDifference(this.target.position);
     var diffY =  -1 * this.position.yDifference(this.target.position);
 
-    console.log('diffX', diffX)
-    console.log('diffY', diffY)
-
     var absDiffX = Math.abs(diffX);
     var absDiffY = Math.abs(diffY);   
     
     var baseDirection = Math.atan(absDiffY/absDiffX);
 
-    console.log('base direction', baseDirection);
 
-    if(diffX > 0){
-      if(diffY > 0){
+    if(diffX >= 0){
+      if(diffY >= 0){
         this.direction = baseDirection;  
       }else{
         
@@ -56,14 +55,13 @@ MoveableDisplayObject = DisplayObject.extend({
       }
     }
     else{
-      if(diffY>0){      
+      if(diffY >= 0){      
         this.direction = Math.PI - baseDirection;
       }else{
         this.direction = Math.PI + baseDirection;        
       }
     }
 
-    console.log('setting direction', this.direction)
   },
 
 
