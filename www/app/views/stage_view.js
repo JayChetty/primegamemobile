@@ -5,6 +5,11 @@ var StageView = function(spec){
   var horizontalTexture = PIXI.Texture.fromImage("asset/horizontal.png");
   var verticalTexture = PIXI.Texture.fromImage("asset/vertical.png");
 
+  this.width = spec.width;
+  this.height = spec.height;
+
+  this.borderWalls = spec.borderWalls;
+
   //set up stage
   this.drawCount = 0
   this.complete = false;
@@ -133,7 +138,43 @@ StageView.prototype = {
         }
       }
 
-    }.bind(this)    
+    }.bind(this)
+
+    //check boundaries
+    var border = 5
+    if(this.helpeeSpriteView.model.position.x < border){//left
+      if(this.borderWalls.left){
+        this.helpeeSpriteView.deflectorBuffer = 20
+        this.helpeeSpriteView.model.direction = (Math.PI) - this.helpeeSpriteView.model.direction;
+      } else{
+        helpee.stuck = true;
+      }
+    }
+    if(this.helpeeSpriteView.model.position.x > this.width - border){//right
+      if(this.borderWalls.right){
+        this.helpeeSpriteView.deflectorBuffer = 20
+        this.helpeeSpriteView.model.direction = (Math.PI) - this.helpeeSpriteView.model.direction;
+      } else{
+        helpee.stuck = true;
+      }
+    }
+    if(this.helpeeSpriteView.model.position.y < border){//top
+      if(this.borderWalls.top){
+        this.helpeeSpriteView.deflectorBuffer = 20
+        this.helpeeSpriteView.model.direction = (Math.PI*2) - this.helpeeSpriteView.model.direction;
+      } else{
+        helpee.stuck = true;
+      }
+    }
+    if(this.helpeeSpriteView.model.position.y > this.height - border){//bottom
+      if(this.borderWalls.bottom){
+        this.helpeeSpriteView.deflectorBuffer = 20
+        this.helpeeSpriteView.model.direction = (Math.PI*2) - this.helpeeSpriteView.model.direction;
+      } else{
+        helpee.stuck = true;
+      }
+    }
+
 
     this.spriteViews.forEach(function(spriteView){
       checkContact(spriteView.model)

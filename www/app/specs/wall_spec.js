@@ -1,5 +1,6 @@
 var assert = require("assert");
 var expect = require("chai").expect;
+var _ = require("underscore");
 var Wall = require("../models/wall.js");
 it('should be a hazard',function(){
   var wall = new Wall();
