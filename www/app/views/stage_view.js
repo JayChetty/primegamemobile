@@ -8,6 +8,9 @@ var StageView = function(spec){
   this.width = spec.width;
   this.height = spec.height;
 
+  console.log('width', this.width);
+  console.log('height', this.height);
+
   this.borderWalls = spec.borderWalls;
 
   //set up stage
@@ -18,10 +21,16 @@ var StageView = function(spec){
   this.inHit = false;
 
 
-  var farTexture = PIXI.Texture.fromImage("asset/grass.png");
+  var farTexture = PIXI.Texture.fromImage("asset/grass2.png");
+  console.log('far text scale mode', farTexture)
+  // farTexture.height = this.height;
+  // farTexture.width = this.width;
+
   var far = new PIXI.Sprite(farTexture);
   far.position.x = 0;
   far.position.y = 0;
+  far.height = this.height;
+  far.width = this.width;
   this.stage.addChild(far);
 
 
