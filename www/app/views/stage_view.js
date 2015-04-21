@@ -98,7 +98,7 @@ StageView.prototype = {
   },
   updatePositions:function(){   
     this.heroTeamSpriteView.updatePosition();
-    this.helpeeSpriteView.model.moveInDirection();
+    this.helpeeSpriteView.updatePosition();
   },
 
   checkComplete:function(){

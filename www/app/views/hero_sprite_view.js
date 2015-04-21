@@ -50,8 +50,7 @@ HeroSpriteView.prototype = {
   updatePosition:function(){
     this.phase++
     this.model.moveTowardsTarget();
-    if(this.model.target && this.phase%10===0){
-      
+    if(this.model.target && this.phase%10===0){     
       this.sprite.setTexture(this.walkTextures[this.phase%20/10]);     
     }   
   },

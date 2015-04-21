@@ -11,6 +11,7 @@
     var Position = require('./models/position');
     var SpriteView = require('./views/sprite_view');
     var HeroSpriteView = require('./views/hero_sprite_view');
+    var HelpeeSpriteView = require('./views/helpee_sprite_view');
     var app = require('ampersand-app');
 
     var level = 1
@@ -24,6 +25,7 @@
         var renderer = PIXI.autoDetectRenderer(width, height);
 
         var blobTexture = PIXI.Texture.fromImage("asset/blob2.png");
+        var dogTexture = PIXI.Texture.fromImage("asset/dog.png");
         var horizontalTexture = PIXI.Texture.fromImage("asset/horizontal.png");
         var hazardTexture = PIXI.Texture.fromImage("asset/hazard.png");
         var wall64Texture = PIXI.Texture.fromImage("asset/wall64.png");
@@ -32,7 +34,7 @@
             // var heroStart = new Position({x:200, y:200})
             var heroSizeStart = 2
             // var helpeeStart = new Position({x:100,y:100})
-            var helpeeDirectionStart = Math.PI*(1/4)
+            var helpeeDirectionStart = 0
             var targetPosition = new Position({x:400,y:200})
         }
 
@@ -51,7 +53,7 @@
             //and sprites
             var heroTeamSprite = new PIXI.Sprite(horizontalTexture);
             var targetSprite = new PIXI.Sprite(blobTexture);
-            var helpeeSprite = new PIXI.Sprite(blobTexture);
+            var helpeeSprite = new PIXI.Sprite(dogTexture);
 
             var hazardSprite = new PIXI.Sprite(hazardTexture);
             var wallSprite = new PIXI.Sprite(wall64Texture);
@@ -66,7 +68,7 @@
 
         var targetView = new SpriteView({ model:targetModel, sprite:targetSprite });
         var heroTeamView = new HeroSpriteView({ model:heroTeamModel, sprite:heroTeamSprite });
-        var helpeeView = new SpriteView({ model:helpeeModel, sprite:helpeeSprite });
+        var helpeeView = new HelpeeSpriteView({ model:helpeeModel, sprite:helpeeSprite });
         //create stage
         var teamView = new TeamView({model:heroTeamModel});
         var teamEl = document.body.querySelector('.team-container');
@@ -85,7 +87,7 @@
             width:width,
             height:height,
             borderWalls:{
-                top:true,
+                top:false,
                 bottom:true,
                 right:true,
                 left:true
